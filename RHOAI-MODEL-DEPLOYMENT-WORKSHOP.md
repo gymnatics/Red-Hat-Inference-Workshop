@@ -151,7 +151,7 @@ Fill in the following:
 | ------------------ | ------------------------------------------------------------- |
 | **Model location** | `URI`                                                         |
 | **URI**            | `oci://quay.io/redhat-ai-services/modelcar-catalog:qwen3-4b` |
-| **Name**           | `qwen3-4b` (auto-populated from URI)                         |
+| **Name**           | `qwen3-4b`                         |
 | **Model type**     | `Generative AI model (Example, LLM)`                         |
 
 > **Tip:** Copy the URI exactly as shown. The name field will auto-populate. This pulls the model as an OCI container image — no storage credentials are required.
