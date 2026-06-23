@@ -157,12 +157,27 @@ A **hardware profile** defines the compute resources (CPU, memory, GPU) allocate
 
 ---
 
-## Step 3.3: Configure Model Details
+## Step 3.3: Configure Model Source
 
-The deployment wizard has multiple steps. Fill in the first section:
+The deployment wizard starts by asking where the model is stored. Fill in the model source first:
 
-### Model details
+| Field           | What to Select/Enter                                          |
+| --------------- | ------------------------------------------------------------- |
+| **Source type** | `URI`                                                         |
+| **URI**         | `oci://quay.io/redhat-ai-services/modelcar-catalog:qwen3-4b` |
 
+> **Tip:** Copy the URI exactly as shown. This pulls the model as an OCI container image — no storage credentials are required.
+
+> **Screenshot placeholder — URI model source configuration**
+>
+> ![Model Source](screenshots/workshop-08-model-source.png)
+> *Add a screenshot showing the URI source type selected and the OCI URI filled in.*
+
+---
+
+## Step 3.4: Configure Deployment Details
+
+Next, configure the model deployment settings:
 
 | Field                     | What to Select/Enter                        |
 | ------------------------- | ------------------------------------------- |
@@ -171,38 +186,21 @@ The deployment wizard has multiple steps. Fill in the first section:
 | **Hardware profile**      | Select `gpu-profile`                        |
 | **Model server replicas** | `1`                                         |
 
-
-> **Screenshot placeholder — Model deployment form (top section)**
+> **Screenshot placeholder — Model deployment details**
 >
-> Model Details
+> ![Deployment Details](screenshots/workshop-09-deployment-details.png)
 > *Add a screenshot showing the model deployment name, serving runtime dropdown, and hardware profile selection.*
-
-### Model source
-
-
-| Field           | What to Select/Enter                                                      |
-| --------------- | ------------------------------------------------------------------------- |
-| **Source type** | `URI`                                                                     |
-| **URI**         | `oci://quay.io/redhat-ai-services/modelcar-catalog:qwen3-4b` |
-
-
-> **Tip:** Copy the URI exactly as shown. This pulls the model as an OCI container image — no storage credentials are required.
-
-> **Screenshot placeholder — URI model source configuration**
->
-> Model Source
-> *Add a screenshot showing the URI source type selected and the OCI URI filled in.*
 
 ---
 
-## Step 3.4: Review and Deploy
+## Step 3.5: Review and Deploy
 
 1. Review the configuration summary
 2. Ensure the following are correct:
+   - **Source URI:** The OCI URI you entered
    - **Serving runtime:** vLLM NVIDIA GPU
    - **Hardware profile:** gpu-profile
    - **Replicas:** 1
-   - **Source URI:** The OCI URI you entered
 3. Click **"Deploy"**
 
 > **Screenshot placeholder — Deployment review/summary**
