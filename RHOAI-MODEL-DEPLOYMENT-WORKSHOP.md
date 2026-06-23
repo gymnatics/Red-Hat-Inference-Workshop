@@ -18,15 +18,14 @@ By the end of this workshop, you will:
 ### Workshop Structure
 
 
-| Part                             | Type            | Duration |
-| -------------------------------- | --------------- | -------- |
-| Part 1: Access OpenShift AI      | Hands-on        | ~10 min  |
-| Part 2: Create Your Project      | Hands-on        | ~5 min   |
-| Part 3: Deploy a Model           | Hands-on        | ~15 min  |
-| Part 4: Wait for Model & Monitor | Hands-on        | ~10 min  |
-| Part 5: Test with AI Playground  | Hands-on        | ~15 min  |
-| Part 6: Advanced Settings        | Instructor Demo | ~15 min  |
-| Part 7: Cleanup                  | Hands-on        | ~5 min   |
+| Part                             | Type           | Duration |
+| -------------------------------- | -------------- | -------- |
+| Part 1: Access OpenShift AI      | Hands-on       | ~10 min  |
+| Part 2: Create Your Project      | Hands-on       | ~5 min   |
+| Part 3: Deploy a Model           | Hands-on       | ~15 min  |
+| Part 4: Wait for Model & Monitor | Hands-on       | ~10 min  |
+| Part 5: Test with AI Playground  | Hands-on       | ~15 min  |
+| Appendix: Good to Know           | Optional       | —        |
 
 
 ---
@@ -356,21 +355,19 @@ The Playground's **Configure** panel on the left side lets you adjust the Temper
 
 ---
 
-# Part 6: Advanced Settings (Instructor Demo)
+# Appendix: Good to Know
 
-> **The following sections are demonstrated by your instructor.** Watch and learn how to configure advanced model serving options.
+These are optional topics for further exploration after the workshop.
 
 ---
 
-## 6.1: Enabling Tool Calling
+## Tool Calling
 
-Tool calling allows the model to invoke external tools (APIs, databases, etc.) to answer questions with live data. This is configured via custom runtime arguments during model deployment.
+Tool calling allows the model to invoke external tools (APIs, databases, etc.) to answer questions with live data. To enable it, add **custom runtime arguments** during model deployment in the **Advanced settings** step (Step 3 of the wizard):
 
-**What the instructor will show:**
+1. Check **"Add custom runtime arguments"**
+2. Add the following arguments (each on its own line):
 
-1. Navigate to the model deployment's **Advanced settings**
-2. Under **"Configuration parameters"**, enable **"Add custom runtime arguments"**
-3. Add the following arguments (each on its own line):
    ```
    --enable-auto-tool-choice
    --tool-call-parser=hermes
@@ -380,28 +377,22 @@ Tool calling allows the model to invoke external tools (APIs, databases, etc.) t
 
 ![Advanced Settings with Tool Calling](images/model-deployment-6.jpeg)
 
-**What these arguments do:**
-
-
 | Argument                    | Purpose                                            |
 | --------------------------- | -------------------------------------------------- |
 | `--enable-auto-tool-choice` | Allows the model to decide when to use tools       |
 | `--tool-call-parser=hermes` | Tells vLLM how to parse Qwen's tool call output    |
 
+Different model families require different tool call parsers:
 
-> **Note:** Different model families require different tool call parsers:
->
->
-> | Model Family | Parser        |
-> | ------------ | ------------- |
-> | Llama        | `llama3_json` |
-> | Qwen         | `hermes`      |
-> | Mistral      | `mistral`     |
->
+| Model Family | Parser        |
+| ------------ | ------------- |
+| Llama        | `llama3_json` |
+| Qwen         | `hermes`      |
+| Mistral      | `mistral`     |
 
 ---
 
-## 6.2: Using the Model Catalog (Optional)
+## Model Catalog
 
 RHOAI 3.4 includes a **Model Catalog** with pre-validated model configurations:
 
@@ -409,33 +400,6 @@ RHOAI 3.4 includes a **Model Catalog** with pre-validated model configurations:
 2. Browse available models (Granite, Llama, Qwen, Mistral, etc.)
 3. Click on a model to see details, recommended hardware, and deployment instructions
 4. Click **"Deploy"** to start a pre-configured deployment
-
-
----
-
-# Part 7: Cleanup (5 min)
-
-When you're done with the workshop, delete your project to free up cluster resources (especially GPU).
-
-## Option A: Via the Dashboard
-
-1. Go to **"Projects"** in the left sidebar
-2. Find your project (`user-XX`)
-3. Click the **kebab menu** (three dots) next to your project
-4. Select **"Delete project"**
-5. Type the project name to confirm and click **Delete**
-
-
-## Option B: Via the Web Terminal
-
-1. Click the **terminal icon** (`>_`) in the top-right corner of the OpenShift Console
-2. Run:
-
-```bash
-oc delete project user-XX
-```
-
-Replace `user-XX` with your actual project name.
 
 ---
 
@@ -446,14 +410,13 @@ You've completed the Model Deployment Workshop!
 ## What You Accomplished
 
 
-| Task                                                            | Status |
-| --------------------------------------------------------------- | ------ |
-| Logged into OpenShift AI                                        | Done   |
-| Created a Data Science project                                  | Done   |
-| Deployed a model with vLLM runtime                              | Done   |
-| Monitored deployment status                                     | Done   |
-| Tested the model via the AI Playground                          | Done   |
-| Learned about advanced settings (tool calling, model catalog)   | Done   |
+| Task                                       | Status |
+| ------------------------------------------ | ------ |
+| Logged into OpenShift AI                   | Done   |
+| Created a Data Science project             | Done   |
+| Deployed a model with vLLM runtime         | Done   |
+| Monitored deployment status                | Done   |
+| Tested the model via the AI Playground     | Done   |
 
 
 ## What's Next?
