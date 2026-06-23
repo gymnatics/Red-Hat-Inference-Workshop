@@ -437,41 +437,7 @@ Tool calling allows the model to invoke external tools (APIs, databases, etc.) t
 
 ---
 
-## 6.2: External Route Access
-
-The instructor will show how to make your model accessible outside the cluster:
-
-1. In the model deployment settings, enable **"Make model deployment available through an external route"**
-2. Optionally enable **"Require token authentication"** for security
-
-Once enabled, the model is accessible at:
-
-```
-https://<model-name>-<namespace>.apps.<cluster-domain>/v1/chat/completions
-```
-
-**Example `curl` test:**
-
-```bash
-MODEL_ROUTE="llama-32-3b-instruct-user-XX.apps.<cluster-domain>"
-
-curl -sk "https://${MODEL_ROUTE}/v1/chat/completions" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "llama-32-3b-instruct",
-    "messages": [{"role": "user", "content": "Hello!"}],
-    "max_tokens": 50
-  }'
-```
-
-> **Screenshot placeholder — External route configuration**
->
-> External Route
-> *Add a screenshot showing the external route toggle and token authentication options.*
-
----
-
-## 6.3: Using the Model Catalog (Optional)
+## 6.2: Using the Model Catalog (Optional)
 
 RHOAI 3.4 includes a **Model Catalog** with pre-validated model configurations:
 
@@ -531,7 +497,7 @@ You've completed the Model Deployment Workshop!
 | Deployed a model with vLLM runtime                              | Done   |
 | Monitored deployment status                                     | Done   |
 | Tested the model via the AI Playground                          | Done   |
-| Learned about advanced settings (tool calling, external routes) | Done   |
+| Learned about advanced settings (tool calling, model catalog)   | Done   |
 
 
 ## What's Next?
@@ -586,16 +552,6 @@ After this workshop, you can explore:
 3. Try refreshing the browser page
 4. Wait 1–2 minutes after the model becomes Available
 
-## "Connection refused" when testing external route
-
-**Cause:** External route not enabled, or TLS certificate issues.
-
-**Fix:**
-
-1. Verify external route is enabled in model settings
-2. Use `-k` flag with curl to skip certificate verification
-3. Check the route exists: `oc get routes -n user-XX`
-
 ## Still stuck?
 
 Raise your hand! The instructors are here to help.
@@ -613,11 +569,10 @@ Raise your hand! The instructors are here to help.
 ## Key URLs
 
 
-| Resource                  | URL                                                       |
-| ------------------------- | --------------------------------------------------------- |
-| OpenShift Console         | `https://console-openshift-console.apps.<cluster-domain>` |
-| RHOAI Dashboard           | `https://rh-ai.apps.<cluster-domain>`                     |
-| Model Endpoint (external) | `https://<model>-<namespace>.apps.<cluster-domain>`       |
+| Resource          | URL                                                       |
+| ----------------- | --------------------------------------------------------- |
+| OpenShift Console | `https://console-openshift-console.apps.<cluster-domain>` |
+| RHOAI Dashboard   | `https://rh-ai.apps.<cluster-domain>`                     |
 
 
 ## Key Terminal Commands
