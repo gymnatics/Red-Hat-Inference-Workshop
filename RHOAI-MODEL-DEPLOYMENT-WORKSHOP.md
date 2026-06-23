@@ -246,11 +246,11 @@ Once the status shows **Ready** (green), your model is ready.
 
 ![Model Ready](images/model-done.png)
 
-1. You should see the model listed under Deployments with a green **Ready** status
-2. Click the expand arrow next to the model name to see details including:
-   - Inference endpoints (internal and external)
-   - Framework, replicas, hardware profile
-   - Token authentication details (if enabled)
+1. Click the **question mark icon** next to the model name to see the resource name and type (`InferenceService`)
+
+![Resource Name](images/resource-name.png)
+
+2. Click the **expand arrow** (>) to the left of the model name to see deployment details including inference endpoints, hardware profile, and token authentication
 
 ![Model Details Expanded](images/token.png)
 
