@@ -407,7 +407,6 @@ Tool calling allows the model to invoke external tools (APIs, databases, etc.) t
   ```
    --enable-auto-tool-choice
    --tool-call-parser=hermes
-   --chat-template=/opt/app-root/template/tool_chat_template_hermes.jinja
   ```
 
 > **Screenshot placeholder — Custom runtime arguments**
@@ -418,11 +417,10 @@ Tool calling allows the model to invoke external tools (APIs, databases, etc.) t
 **What these arguments do:**
 
 
-| Argument                         | Purpose                                                 |
-| -------------------------------- | ------------------------------------------------------- |
-| `--enable-auto-tool-choice`      | Allows the model to decide when to use tools            |
-| `--tool-call-parser=llama3_json` | Tells vLLM how to parse Llama's tool call output        |
-| `--chat-template=...`            | Uses the correct Jinja template for tool-calling format |
+| Argument                    | Purpose                                            |
+| --------------------------- | -------------------------------------------------- |
+| `--enable-auto-tool-choice` | Allows the model to decide when to use tools       |
+| `--tool-call-parser=hermes` | Tells vLLM how to parse Qwen's tool call output    |
 
 
 > **Note:** Different model families require different tool call parsers:
