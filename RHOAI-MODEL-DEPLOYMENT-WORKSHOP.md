@@ -61,44 +61,27 @@ For example, if you are **user 5**, then:
 
 # Part 1: Access OpenShift AI (10 min)
 
-## Step 1.1: Log into OpenShift
+## Step 1.1: Log into OpenShift AI
 
 1. Open your web browser (Chrome or Firefox recommended)
-2. Go to the OpenShift Console URL provided by your instructor
-3. Select the login provider specified by your instructor (e.g., `workshop-users` or `htpasswd`)
+2. Go to the **OpenShift AI Dashboard URL** provided by your instructor
+3. You will be redirected to a login page — select the login provider specified by your instructor (e.g., `workshop-users` or `htpasswd`)
 4. Enter your username and password
 5. Click **"Log in"**
 
-You should now see the **OpenShift Console**.
-
-> **Screenshot placeholder — OpenShift login screen**
->
-> OpenShift Login
-> *Add a screenshot of the OpenShift login page with the identity provider selection.*
-
-> Can't log in? Double-check your username and password with your instructor.
-
----
-
-## Step 1.2: Navigate to OpenShift AI
-
-1. Look at the **top-right corner** of the OpenShift Console
-2. Click the **grid icon** (the 3x3 application launcher)
-3. Select **"Red Hat OpenShift AI"** from the dropdown
-
 You should now see the **OpenShift AI Dashboard** with a left sidebar showing menu items like "Projects", "Model catalog", "Gen AI studio", etc.
 
-> **Screenshot placeholder — Application launcher and OpenShift AI entry**
+> **Screenshot placeholder — OpenShift AI login screen**
 >
-> Application Launcher
-> *Add a screenshot showing the grid icon expanded with "Red Hat OpenShift AI" highlighted.*
+> ![OpenShift AI Login](screenshots/workshop-01-login.png)
+> *Add a screenshot of the login page with the identity provider selection.*
 
 > **Screenshot placeholder — OpenShift AI Dashboard home**
 >
-> RHOAI Dashboard
+> ![RHOAI Dashboard](screenshots/workshop-02-dashboard-home.png)
 > *Add a screenshot of the OpenShift AI dashboard landing page.*
 
-> **Tip:** You can always return to OpenShift AI by clicking the grid icon and selecting "Red Hat OpenShift AI". In RHOAI 3.4, the dashboard URL is `https://rh-ai.apps.<cluster-domain>`.
+> Can't log in? Double-check your username and password with your instructor.
 
 ---
 
@@ -567,10 +550,9 @@ Raise your hand! The instructors are here to help.
 ## Key URLs
 
 
-| Resource          | URL                                                       |
-| ----------------- | --------------------------------------------------------- |
-| OpenShift Console | `https://console-openshift-console.apps.<cluster-domain>` |
-| RHOAI Dashboard   | `https://rh-ai.apps.<cluster-domain>`                     |
+| Resource        | URL                                   |
+| --------------- | ------------------------------------- |
+| RHOAI Dashboard | `https://rh-ai.apps.<cluster-domain>` |
 
 
 ## Key Terminal Commands
@@ -648,13 +630,13 @@ This section is for workshop instructors setting up the environment.
 Provide each participant with:
 
 
-| Field                     | Value                                                     |
-| ------------------------- | --------------------------------------------------------- |
-| OpenShift Console URL     | `https://console-openshift-console.apps.<cluster-domain>` |
-| Login provider            | `htpasswd` or `workshop-users`                            |
-| Username                  | `userXX`                                                  |
-| Password                  | (your chosen password)                                    |
-| User number (for project) | `XX`                                                      |
+| Field                     | Value                                 |
+| ------------------------- | ------------------------------------- |
+| OpenShift AI Dashboard URL | `https://rh-ai.apps.<cluster-domain>` |
+| Login provider            | `htpasswd` or `workshop-users`        |
+| Username                  | `userXX`                              |
+| Password                  | (your chosen password)                |
+| User number (for project) | `XX`                                  |
 
 
 ---
