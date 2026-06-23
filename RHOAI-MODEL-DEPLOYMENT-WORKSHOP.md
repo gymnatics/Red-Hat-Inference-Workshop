@@ -40,7 +40,7 @@ Before starting, make sure the following are ready:
 - A GPU hardware profile created by your administrator (`gpu-profile`)
 - Your login credentials (username and password provided by your instructor)
 
-> **Instructor note:** Use `scripts/install-rhoai-34.sh --setup-users --num-users <N>` to create workshop user accounts. See the [RHOAI 3.4 Installation Guide](rhoai-3.4/RHOAI-34-INSTALLATION.md) for full setup details.
+> **Instructor note:** Use `scripts/install-rhoai-34.sh --skip-rhcl --skip-maas --setup-users --num-users <N>` to create workshop user accounts. RHCL and MaaS are not required for this workshop. See the [RHOAI 3.4 Installation Guide](rhoai-3.4/RHOAI-34-INSTALLATION.md) for full setup details.
 
 ---
 
@@ -608,26 +608,42 @@ This section is for workshop instructors setting up the environment.
 
 ## Pre-workshop Setup
 
-1. **Install RHOAI 3.4** using the automated script:
-  ```bash
-   ./scripts/install-rhoai-34.sh --setup-users --num-users <N> --user-password <password>
-  ```
+1. **Install RHOAI 3.4** using the automated script (no RHCL/MaaS needed):
+
+   ```bash
+   ./scripts/install-rhoai-34.sh --skip-rhcl --skip-maas --setup-users --num-users <N> --user-password <password>
+   ```
+
+   This installs RHOAI with direct model serving (Path A). Users will deploy models via the standard `InferenceService` path in the dashboard.
+
 2. **Verify GPU nodes** are available:
-  ```bash
+
+   ```bash
    oc get nodes -l nvidia.com/gpu.present=true
-  ```
+   ```
+
 3. **Verify hardware profile** exists:
-  ```bash
+
+   ```bash
    oc get hardwareprofile gpu-profile -n redhat-ods-applications
-  ```
+   ```
+
    If missing, create it:
+
+   ```bash
+   oc apply -f lib/manifests/rhoai/hardware-profile-gpu.yaml
+   ```
+
 4. **Verify dashboard features** are enabled:
-  ```bash
+
+   ```bash
    oc get odhdashboardconfig odh-dashboard-config -n redhat-ods-applications \
      -o jsonpath='{.spec.dashboardConfig}' | jq '{disableModelCatalog, genAiStudio}'
-  ```
+   ```
+
 5. **Test a model deployment** yourself before the workshop to ensure images are cached on nodes.
-6. **Prepare screenshots** for all placeholder sections marked with `> **Screenshot placeholder`** in this guide. Take screenshots from a `user-01` session and place them in a `screenshots/` directory alongside this guide.
+
+6. **Prepare screenshots** for all placeholder sections marked with `> **Screenshot placeholder**` in this guide. Take screenshots from a `user-01` session and place them in a `screenshots/` directory alongside this guide.
 
 ## Workshop Credentials Template
 
