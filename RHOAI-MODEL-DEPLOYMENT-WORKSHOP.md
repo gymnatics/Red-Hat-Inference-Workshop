@@ -71,15 +71,7 @@ For example, if you are **user 5**, then:
 
 You should now see the **OpenShift AI Dashboard** with a left sidebar showing menu items like "Projects", "Model catalog", "Gen AI studio", etc.
 
-> **Screenshot placeholder — OpenShift AI login screen**
->
-> ![OpenShift AI Login](screenshots/workshop-01-login.png)
-> *Add a screenshot of the login page with the identity provider selection.*
-
-> **Screenshot placeholder — OpenShift AI Dashboard home**
->
-> ![RHOAI Dashboard](screenshots/workshop-02-dashboard-home.png)
-> *Add a screenshot of the OpenShift AI dashboard landing page.*
+![OpenShift AI Dashboard](images/landing_page.jpeg)
 
 > Can't log in? Double-check your username and password with your instructor.
 
@@ -92,27 +84,24 @@ A "project" (also known as a Kubernetes namespace) is your workspace where you'l
 ## Step 2.1: Create a New Project
 
 1. Click **"Projects"** in the left sidebar
+
+![Projects Page](images/project_page.jpeg)
+
 2. Click the **"Create project"** button (top right)
 3. Fill in the form:
 
-  | Field           | What to Enter                                         |
-  | --------------- | ----------------------------------------------------- |
-  | **Name**        | `user-XX` (use your assigned number, e.g., `user-05`) |
-  | **Description** | `My workshop project` (optional)                      |
+   | Field           | What to Enter                                         |
+   | --------------- | ----------------------------------------------------- |
+   | **Name**        | `user-XX` (use your assigned number, e.g., `user-05`) |
+   | **Description** | `My workshop project` (optional)                      |
 
 4. Click **"Create"**
 
-> **Screenshot placeholder — Create project form**
->
-> Create Project
-> *Add a screenshot showing the "Create project" dialog with the name field filled in.*
+![Create Project Dialog](images/create_project.jpeg)
 
-You should now see your project `user-XX` listed in the Projects view, with tabs for **Overview**, **Deployments**, **Workbenches**, **Connections**, etc.
+You should now see your project `user-XX` with tabs for **Overview**, **Workbenches**, **Pipelines**, **Deployments**, **Connections**, etc.
 
-> **Screenshot placeholder — Project overview page**
->
-> Project Overview
-> *Add a screenshot of the newly created project's overview page showing the empty state.*
+![Project Overview](images/project_landing.jpeg)
 
 ---
 
@@ -134,10 +123,7 @@ A **hardware profile** defines the compute resources (CPU, memory, GPU) allocate
   - Node selector for GPU nodes (`nvidia.com/gpu.present: "true"`)
   - Tolerations for GPU node taints
 
-> **Screenshot placeholder — Hardware profiles settings page**
->
-> Hardware Profiles
-> *Add a screenshot of the Settings > Hardware profiles page showing the gpu-profile.*
+![Hardware Profile](images/Hardware_profile.png)
 
 > **Important:** Only administrators can create or modify hardware profiles. As a workshop participant, you'll **select** the pre-created `gpu-profile` when deploying your model.
 
@@ -150,63 +136,89 @@ A **hardware profile** defines the compute resources (CPU, memory, GPU) allocate
 3. Click the **"Deployments"** tab
 4. Click the **"Deploy model"** button
 
-> **Screenshot placeholder — Empty deployments tab with "Deploy model" button**
->
-> Deploy Model Button
-> *Add a screenshot of the project Deployments tab showing the "Deploy model" button.*
+![Deployments Tab](images/deployment_page.jpeg)
 
 ---
 
-## Step 3.3: Configure Model Source
+## Step 3.3: Wizard Step 1 — Model Details
 
-The deployment wizard starts by asking where the model is stored. Fill in the model source first:
+The deployment wizard has 4 steps. The first step asks where the model is stored.
 
-| Field           | What to Select/Enter                                          |
-| --------------- | ------------------------------------------------------------- |
-| **Source type** | `URI`                                                         |
-| **URI**         | `oci://quay.io/redhat-ai-services/modelcar-catalog:qwen3-4b` |
+![Wizard Step 1 — Empty](images/Model_deployment_1.jpeg)
 
-> **Tip:** Copy the URI exactly as shown. This pulls the model as an OCI container image — no storage credentials are required.
+Fill in the following:
 
-> **Screenshot placeholder — URI model source configuration**
->
-> ![Model Source](screenshots/workshop-08-model-source.png)
-> *Add a screenshot showing the URI source type selected and the OCI URI filled in.*
+| Field              | What to Select/Enter                                          |
+| ------------------ | ------------------------------------------------------------- |
+| **Model location** | `URI`                                                         |
+| **URI**            | `oci://quay.io/redhat-ai-services/modelcar-catalog:qwen3-4b` |
+| **Name**           | `qwen3-4b` (auto-populated from URI)                         |
+| **Model type**     | `Generative AI model (Example, LLM)`                         |
 
----
+> **Tip:** Copy the URI exactly as shown. The name field will auto-populate. This pulls the model as an OCI container image — no storage credentials are required.
 
-## Step 3.4: Configure Deployment Details
+![Wizard Step 1 — Filled](images/model_deployment-2.jpeg)
 
-Next, configure the model deployment settings:
-
-| Field                     | What to Select/Enter                        |
-| ------------------------- | ------------------------------------------- |
-| **Model deployment name** | `qwen3-4b`                                  |
-| **Serving runtime**       | `vLLM NVIDIA GPU ServingRuntime for KServe` |
-| **Hardware profile**      | Select `gpu-profile`                        |
-| **Model server replicas** | `1`                                         |
-
-> **Screenshot placeholder — Model deployment details**
->
-> ![Deployment Details](screenshots/workshop-09-deployment-details.png)
-> *Add a screenshot showing the model deployment name, serving runtime dropdown, and hardware profile selection.*
+Click **"Next"** to proceed.
 
 ---
 
-## Step 3.5: Review and Deploy
+## Step 3.4: Wizard Step 2 — Model Deployment
 
-1. Review the configuration summary
-2. Ensure the following are correct:
-   - **Source URI:** The OCI URI you entered
-   - **Serving runtime:** vLLM NVIDIA GPU
-   - **Hardware profile:** gpu-profile
-   - **Replicas:** 1
-3. Click **"Deploy"**
+Configure the deployment settings:
 
-> **Screenshot placeholder — Deployment review/summary**
->
-> ![Deploy Review](screenshots/workshop-10-deploy-review.png)
-> *Add a screenshot of the deployment summary or the final step before clicking "Deploy".*
+| Field                      | What to Select/Enter                        |
+| -------------------------- | ------------------------------------------- |
+| **Model deployment name**  | `qwen3-4b` (auto-populated)                |
+| **Hardware profile**       | Select `GPU Profile (L4 24GB)` or your GPU profile |
+| **Deployment resource**    | `Automatic selection` or `Manual selection` |
+| **Number of replicas**     | `1`                                         |
+
+![Wizard Step 2 — Deployment name and hardware profile](images/model_deployment_3.jpeg)
+
+If you choose **Manual selection** for deployment resource, select **vLLM NVIDIA GPU ServingRuntime for KServe** from the dropdown:
+
+![Runtime Selection](images/vllm_runtime.jpeg)
+
+![Wizard Step 2 — Runtime and replicas](images/model_deployment-4.jpeg)
+
+Click **"Next"** to proceed.
+
+---
+
+## Step 3.5: Wizard Step 3 — Advanced Settings
+
+This step configures model availability and access. **You must check "Publish as AI asset endpoint"** to use the AI Playground later.
+
+| Setting                           | What to Do                        |
+| --------------------------------- | --------------------------------- |
+| **Publish as AI asset endpoint**  | **Check this box** (required for Playground) |
+| **Make model deployment available through an external route** | Leave unchecked (optional) |
+| **Require token authentication**  | Leave unchecked (optional) |
+| **Add custom runtime arguments**  | Leave unchecked (for now) |
+
+![Advanced Settings](images/model_deployment-5.jpeg)
+
+> **Important:** If you skip checking "Publish as AI asset endpoint", your model will not appear in the Playground.
+
+Click **"Next"** to proceed.
+
+---
+
+## Step 3.6: Wizard Step 4 — Review and Deploy
+
+Review the configuration summary. Verify the key settings:
+
+- **Model location:** URI
+- **Location details:** `oci://quay.io/redhat-ai-services/modelcar-catalog:qwen3-4b`
+- **Hardware profile:** gpu-profile
+- **Deployment resource:** vLLM NVIDIA GPU ServingRuntime for KServe
+- **Replicas:** 1
+- **AI asset endpoint:** Yes
+
+![Review Page](images/review-model.jpeg)
+
+Click **"Deploy model"** to start the deployment.
 
 ---
 
@@ -219,41 +231,29 @@ The model needs a few minutes to pull the container image and start the vLLM ser
 1. After clicking Deploy, you'll be taken to the Deployments tab
 2. Watch the status indicator next to `qwen3-4b`:
 
+| Status       | What It Means                                        |
+| ------------ | ---------------------------------------------------- |
+| **Starting** | Container image is being pulled and model is loading |
+| **Ready**    | Model is ready to serve requests                     |
+| **Failed**   | Something went wrong (check events)                  |
 
-| Status          | What It Means                                        |
-| --------------- | ---------------------------------------------------- |
-| **Pending**     | Model pod is being scheduled                         |
-| **Progressing** | Container image is being pulled and model is loading |
-| **Available**   | Model is ready to serve requests                     |
-| **Failed**      | Something went wrong (check events)                  |
-
-
-> **Screenshot placeholder — Model deployment in progress**
->
-> Deployment Progress
-> *Add a screenshot showing the model deployment with a "Progressing" or loading status.*
+![Model Starting](images/model-wait.jpeg)
 
 > This typically takes **3–5 minutes** depending on image cache state and GPU availability. Feel free to stretch!
 
 ## Step 4.2: Verify the Model is Running
 
-Once the status shows **Available** (green), your model is ready.
+Once the status shows **Ready** (green), your model is ready.
 
-1. You should see the model listed under Deployments with a green status indicator
-2. Click on the model name to see details including:
-  - Inference endpoint URL
-  - Resource utilization
-  - Pod status
+![Model Ready](images/model-done.png)
 
-> **Screenshot placeholder — Model deployment showing "Available" status**
->
-> Model Available
-> *Add a screenshot showing the model with a green "Available" status indicator.*
+1. You should see the model listed under Deployments with a green **Ready** status
+2. Click the expand arrow next to the model name to see details including:
+   - Inference endpoints (internal and external)
+   - Framework, replicas, hardware profile
+   - Token authentication details (if enabled)
 
-> **Screenshot placeholder — Model deployment details page**
->
-> Model Details Page
-> *Add a screenshot of the model's detail page showing the inference endpoint and pod status.*
+![Model Details Expanded](images/token.png)
 
 ---
 
@@ -261,80 +261,69 @@ Once the status shows **Available** (green), your model is ready.
 
 The **AI Playground** provides a chat interface to interact with your deployed model directly from the dashboard — no code required.
 
-## Step 5.1: Enable Model as an AI Asset
+## Step 5.1: Verify AI Asset Endpoint
 
-To use your model in the Playground, it needs to be registered as an AI asset endpoint. If you checked **"Make deployed models available as AI assets"** during deployment, this is already done.
+Since you checked **"Publish as AI asset endpoint"** during deployment (Step 3.5), your model should already be registered.
 
-If not, you can add it manually:
+1. Click **"Gen AI studio"** in the left sidebar to expand it
+2. Click **"AI asset endpoints"**
+3. Make sure your project (`user-XX`) is selected in the **Project** dropdown
+4. You should see `qwen3-4b` listed with a **Ready** status
 
-1. Go to **"Projects"** > your project (`user-XX`)
-2. Click the **"Deployments"** tab
-3. Click on your model name (`qwen3-4b`)
-4. Look for the option to **"Add as AI asset endpoint"** or verify it's already listed
-
-> **Screenshot placeholder — AI asset endpoint toggle or confirmation**
->
-> AI Asset Endpoint
-> *Add a screenshot showing where the model is registered as an AI asset endpoint.*
+![AI Asset Endpoints](images/ai-asset-endpoint.png)
 
 ---
 
-## Step 5.2: Open the AI Playground
+## Step 5.2: Create the Playground
 
-1. Click **"Gen AI studio"** in the left sidebar
-2. Click **"Playground"**
-3. You should see a chat interface
-4. Select your model from the **model dropdown** if it's not already selected
+1. On the AI asset endpoints page, click **"Add to playground"** next to your model
+2. In the **"Configure playground"** dialog, make sure `qwen3-4b` is checked
+3. Click **"Create"**
 
-> **Screenshot placeholder — Gen AI Studio > Playground**
->
-> Playground
-> *Add a screenshot of the AI Playground with the model selected in the dropdown.*
+![Configure Playground](images/create-playground.png)
 
 ---
 
-## Step 5.3: Chat with Your Model
+## Step 5.3: Open the Playground
+
+1. Click **"Gen AI studio"** > **"Playground"** in the left sidebar
+2. You should see the Playground interface with your model selected
+
+![Playground Interface](images/open-playground.png)
+
+---
+
+## Step 5.4: Chat with Your Model
+
+Type a message in the chat box and press Enter (or click the send button).
+
+![Typing a Message](images/chat-model.png)
 
 Try these prompts to verify your model is working:
 
-### Basic test
-
-Type the following in the chat box and press Enter:
-
 ```
-What is the capital of France?
+What is Kubernetes?
 ```
-
-You should receive a coherent answer about Paris.
-
-### Creative test
 
 ```
 Write a haiku about cloud computing.
 ```
 
-### Reasoning test
-
 ```
 Explain the difference between machine learning and deep learning in simple terms.
 ```
-
-### Code generation test
 
 ```
 Write a Python function that calculates the Fibonacci sequence up to n terms.
 ```
 
-> **Screenshot placeholder — Playground conversation with responses**
->
-> Playground Chat
-> *Add a screenshot showing a conversation in the Playground with both the user prompt and the model's response visible.*
+![Model Response](images/result.png)
 
 Your AI model is working! You can continue chatting with it about any topic.
 
 ---
 
-## Step 5.4: Explore Playground Settings
+## Step 5.5: Explore Playground Settings
 
 The Playground offers several configuration options to tune model behavior:
 
@@ -363,10 +352,7 @@ What is Kubernetes?
 
 Notice how the response now includes an analogy!
 
-> **Screenshot placeholder — Playground settings panel**
->
-> Playground Settings
-> *Add a screenshot showing the Playground settings panel with temperature, max tokens, and system prompt options.*
+The Playground's **Configure** panel on the left side lets you adjust the Temperature slider and toggle Streaming. Click the **Prompt** tab to set a system prompt.
 
 ---
 
@@ -385,15 +371,14 @@ Tool calling allows the model to invoke external tools (APIs, databases, etc.) t
 1. Navigate to the model deployment's **Advanced settings**
 2. Under **"Configuration parameters"**, enable **"Add custom runtime arguments"**
 3. Add the following arguments (each on its own line):
-  ```
+   ```
    --enable-auto-tool-choice
    --tool-call-parser=hermes
-  ```
+   ```
 
-> **Screenshot placeholder — Custom runtime arguments**
->
-> Tool Calling Args
-> *Add a screenshot of the Advanced settings showing the custom runtime arguments for tool calling.*
+![Custom Runtime Arguments](images/vllm-args.png)
+
+![Advanced Settings with Tool Calling](images/model-deployment-6.jpeg)
 
 **What these arguments do:**
 
@@ -425,10 +410,6 @@ RHOAI 3.4 includes a **Model Catalog** with pre-validated model configurations:
 3. Click on a model to see details, recommended hardware, and deployment instructions
 4. Click **"Deploy"** to start a pre-configured deployment
 
-> **Screenshot placeholder — Model catalog page**
->
-> Model Catalog
-> *Add a screenshot of the Model Catalog showing available model cards.*
 
 ---
 
@@ -444,10 +425,6 @@ When you're done with the workshop, delete your project to free up cluster resou
 4. Select **"Delete project"**
 5. Type the project name to confirm and click **Delete**
 
-> **Screenshot placeholder — Delete project confirmation**
->
-> Delete Project
-> *Add a screenshot of the delete project confirmation dialog.*
 
 ## Option B: Via the Web Terminal
 
@@ -621,7 +598,7 @@ This section is for workshop instructors setting up the environment.
 
 5. **Test a model deployment** yourself before the workshop to ensure images are cached on nodes.
 
-6. **Prepare screenshots** for all placeholder sections marked with `> **Screenshot placeholder**` in this guide. Take screenshots from a `user-01` session and place them in a `screenshots/` directory alongside this guide.
+6. **Review the guide images** in the `images/` directory to ensure they match your cluster's UI version.
 
 ## Workshop Credentials Template
 
