@@ -168,7 +168,7 @@ Configure the deployment settings:
 
 | Field                      | What to Select/Enter                        |
 | -------------------------- | ------------------------------------------- |
-| **Model deployment name**  | `qwen3-4b` (auto-populated)                |
+| **Model deployment name**  | `qwen3-4b`                 |
 | **Hardware profile**       | Select `GPU Profile (L4 24GB)` or your GPU profile |
 | **Deployment resource**    | `Automatic selection` or `Manual selection` |
 | **Number of replicas**     | `1`                                         |
@@ -192,8 +192,8 @@ This step configures model availability and access. **You must check "Publish as
 | Setting                           | What to Do                        |
 | --------------------------------- | --------------------------------- |
 | **Publish as AI asset endpoint**  | **Check this box** (required for Playground) |
-| **Make model deployment available through an external route** | Leave unchecked (optional) |
-| **Require token authentication**  | Leave unchecked (optional) |
+| **Make model deployment available through an external route** | Check this box |
+| **Require token authentication**  | Check this box |
 | **Add custom runtime arguments**  | Leave unchecked (for now) |
 
 ![Advanced Settings](images/model_deployment-5.jpeg)
