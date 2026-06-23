@@ -11,7 +11,7 @@
 By the end of this workshop, you will:
 
 - Create a Data Science project in OpenShift AI
-- Deploy an AI model (Llama 3.2-3B) using the vLLM runtime via the dashboard
+- Deploy an AI model (Qwen3-4B) using the vLLM runtime via the dashboard
 - Enable the AI Playground and chat with your model
 - Understand hardware profiles and model serving configuration
 
@@ -135,7 +135,7 @@ You should now see your project `user-XX` listed in the Projects view, with tabs
 
 # Part 3: Deploy a Model (15 min)
 
-In this section, you'll deploy the **Llama 3.2 3B Instruct** model using the **vLLM** serving runtime. The model is stored as an OCI (container) image, so no S3 storage credentials are needed.
+In this section, you'll deploy the **Qwen3-4B** model using the **vLLM** serving runtime. The model is stored as an OCI (container) image, so no S3 storage credentials are needed.
 
 ## Step 3.1: Understanding Hardware Profiles (Instructor Demo)
 
@@ -183,7 +183,7 @@ The deployment wizard has multiple steps. Fill in the first section:
 
 | Field                     | What to Select/Enter                        |
 | ------------------------- | ------------------------------------------- |
-| **Model deployment name** | `llama-32-3b-instruct`                      |
+| **Model deployment name** | `qwen3-4b`                                  |
 | **Serving runtime**       | `vLLM NVIDIA GPU ServingRuntime for KServe` |
 | **Hardware profile**      | Select `gpu-profile`                        |
 | **Model server replicas** | `1`                                         |
@@ -200,7 +200,7 @@ The deployment wizard has multiple steps. Fill in the first section:
 | Field           | What to Select/Enter                                                      |
 | --------------- | ------------------------------------------------------------------------- |
 | **Source type** | `URI`                                                                     |
-| **URI**         | `oci://quay.io/redhat-ai-services/modelcar-catalog:llama-3.2-3b-instruct` |
+| **URI**         | `oci://quay.io/redhat-ai-services/modelcar-catalog:qwen3-4b` |
 
 
 > **Tip:** Copy the URI exactly as shown. This pulls the model as an OCI container image — no storage credentials are required.
@@ -236,7 +236,7 @@ The model needs a few minutes to pull the container image and start the vLLM ser
 ## Step 4.1: Monitor Deployment Status
 
 1. After clicking Deploy, you'll be taken to the Deployments tab
-2. Watch the status indicator next to `llama-32-3b-instruct`:
+2. Watch the status indicator next to `qwen3-4b`:
 
 
 | Status          | What It Means                                        |
@@ -288,7 +288,7 @@ If not, you can add it manually:
 
 1. Go to **"Projects"** > your project (`user-XX`)
 2. Click the **"Deployments"** tab
-3. Click on your model name (`llama-32-3b-instruct`)
+3. Click on your model name (`qwen3-4b`)
 4. Look for the option to **"Add as AI asset endpoint"** or verify it's already listed
 
 > **Screenshot placeholder — AI asset endpoint toggle or confirmation**
@@ -406,8 +406,8 @@ Tool calling allows the model to invoke external tools (APIs, databases, etc.) t
 3. Add the following arguments (each on its own line):
   ```
    --enable-auto-tool-choice
-   --tool-call-parser=llama3_json
-   --chat-template=/opt/app-root/template/tool_chat_template_llama3.2_json.jinja
+   --tool-call-parser=hermes
+   --chat-template=/opt/app-root/template/tool_chat_template_hermes.jinja
   ```
 
 > **Screenshot placeholder — Custom runtime arguments**
@@ -594,7 +594,7 @@ oc get inferenceservice -n user-XX
 oc get nodes -l nvidia.com/gpu.present=true
 
 # View model logs (if troubleshooting)
-oc logs -n user-XX -l serving.kserve.io/inferenceservice=llama-32-3b-instruct --tail=50
+oc logs -n user-XX -l serving.kserve.io/inferenceservice=qwen3-4b --tail=50
 
 # Delete your project (cleanup)
 oc delete project user-XX
