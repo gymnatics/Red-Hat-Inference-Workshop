@@ -1,18 +1,20 @@
 # Kubernetes MCP Server — provides cluster query tools for LLM tool calling
 #
-# Deploys an MCP server in the participant's namespace with read-only
-# cluster access. Provides tools like listing pods, namespaces, deployments,
-# services, and viewing logs.
+# Deploys an MCP server in the participant's namespace with read access
+# to resources in their own namespace.
 #
 # Resources created:
 #   - ServiceAccount: identity for the MCP server pod
-#   - ClusterRoleBinding: grants cluster-wide read access (view role)
+#   - RoleBinding: grants read access (view role) in your namespace
 #   - Deployment: runs the MCP server container
 #   - Service: exposes the MCP server within the cluster
 #
+# Note: For cluster-wide access (e.g., listing all namespaces), your
+# instructor can create a ClusterRoleBinding for you.
+#
 # Usage:
 #   export NAMESPACE=user-XX
-#   envsubst < manifests/mcp-server.yaml | oc apply -f -
+#   sed "s|\${NAMESPACE}|$NAMESPACE|g" manifests/mcp-server.yaml | oc apply -f -
 #
 ---
 apiVersion: v1
@@ -22,9 +24,10 @@ metadata:
   namespace: ${NAMESPACE}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
-  name: kubernetes-mcp-server-${NAMESPACE}
+  name: kubernetes-mcp-server-view
+  namespace: ${NAMESPACE}
 subjects:
 - kind: ServiceAccount
   name: kubernetes-mcp-server
