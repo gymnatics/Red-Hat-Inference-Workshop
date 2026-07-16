@@ -497,19 +497,20 @@ You (browser) → Open WebUI → OGX/LlamaStack → vLLM (your model)
 
 # Part 9: Test RAG (~10 min)
 
-Open WebUI has built-in RAG (Retrieval-Augmented Generation) that lets you upload documents and ask questions about them — no external infrastructure needed.
+Open WebUI has built-in RAG (Retrieval-Augmented Generation) that lets you upload documents/websites and ask questions about them — no external infrastructure needed.
 
 ## Step 9.1: Upload a Document
 
 1. In the chat sidebar, click the **+** icon (or the paperclip/attachment icon)
 2. Upload a document (PDF, text file, or paste text). Suggestion: upload any short document (e.g., a page from Red Hat documentation, a project README, or even this workshop guide)
+3. In this example, we will be using a website for the RAG: https://support.apple.com/en-sg/126322
 
 ## Step 9.2: Ask Questions About the Document
 
 After upload, try these prompts:
 
 ```
-Summarize this document.
+What colors does the Maxbook Neo come in?
 ```
 
 ```
@@ -517,7 +518,7 @@ What are the key topics covered?
 ```
 
 ```
-What prerequisites are mentioned?
+What year was it introduced?
 ```
 
 ## Step 9.3: Understand How It Works
