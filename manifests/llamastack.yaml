@@ -44,7 +44,7 @@ data:
         provider_type: remote::vllm
         config:
           base_url: http://qwen3-4b-predictor.admin-workshop.svc.cluster.local/v1
-          max_tokens: 4096
+          max_tokens: 2048
           api_token: placeholder
     metadata_store:
       type: sqlite
