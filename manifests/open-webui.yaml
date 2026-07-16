@@ -1,18 +1,14 @@
-# Open WebUI + mcpo proxy — chat interface with MCP tool support
+# Open WebUI — self-hosted chat interface (v0.9.0)
 #
-# Deploys Open WebUI (v0.9.0) and the mcpo proxy in a participant's
-# namespace. The mcpo proxy converts MCP tools to OpenAPI endpoints
-# that Open WebUI can call reliably.
+# Deploys Open WebUI in a participant's namespace for LLM chat and RAG.
+# Participants add their LlamaStack connection manually via the UI.
 #
-# Resources created (8 total):
+# Resources created (5 total):
 #   - ConfigMap (openwebui-config) — base configuration
 #   - PersistentVolumeClaim — 2Gi storage for OpenWebUI data
 #   - Deployment (open-webui) — the Open WebUI container
 #   - Service (open-webui) — internal cluster access on port 8080
 #   - Route (open-webui) — external HTTPS URL for your browser
-#   - ConfigMap (mcpo-config) — proxy config pointing to MCP server
-#   - Deployment (mcpo) — the mcpo proxy container
-#   - Service (mcpo) — exposes the proxy at port 8000
 #
 # Usage:
 #   export NAMESPACE=user-XX
@@ -30,7 +26,6 @@ data:
   OPENAI_API_KEYS: ""
   WEBUI_AUTH: "False"
   WEBUI_SECRET_KEY: "rhoai-workshop-secret-key"
-  MCP_ENABLE: "true"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -132,75 +127,3 @@ spec:
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: mcpo-config
-  namespace: ${NAMESPACE}
-data:
-  config.json: |
-    {
-      "mcpServers": {
-        "kubernetes": {
-          "type": "streamable-http",
-          "url": "http://kubernetes-mcp-server.${NAMESPACE}.svc.cluster.local:8080/mcp"
-        }
-      }
-    }
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: mcpo
-  namespace: ${NAMESPACE}
-  labels:
-    app: mcpo
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: mcpo
-  template:
-    metadata:
-      labels:
-        app: mcpo
-    spec:
-      containers:
-      - name: mcpo
-        image: ghcr.io/open-webui/mcpo:main
-        args:
-        - --config
-        - /app/config.json
-        ports:
-        - containerPort: 8000
-        volumeMounts:
-        - name: config
-          mountPath: /app/config.json
-          subPath: config.json
-        resources:
-          requests:
-            cpu: 50m
-            memory: 128Mi
-          limits:
-            cpu: 500m
-            memory: 256Mi
-      volumes:
-      - name: config
-        configMap:
-          name: mcpo-config
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mcpo
-  namespace: ${NAMESPACE}
-  labels:
-    app: mcpo
-spec:
-  selector:
-    app: mcpo
-  ports:
-  - port: 8000
-    targetPort: 8000
-  type: ClusterIP

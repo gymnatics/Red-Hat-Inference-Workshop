@@ -1,6 +1,6 @@
 # Red Hat OpenShift AI — Model Deployment Workshop
 
-A hands-on workshop (~2 hours) for deploying AI models on Red Hat OpenShift AI (RHOAI) 3.4, enabling tool calling with vLLM, deploying Open WebUI as a chat interface, and connecting MCP servers for live cluster querying.
+A hands-on workshop (~2 hours) for deploying AI models on Red Hat OpenShift AI (RHOAI) 3.4, with LlamaStack and Open WebUI for chat and RAG — plus a live instructor demo of MCP tool calling via the AI Playground.
 
 ## Quick Start
 
@@ -17,12 +17,18 @@ See [RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md](RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md) for
 
 | File | Purpose |
 |------|---------|
-| `RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md` | Workshop guide (12 parts) |
+| `RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md` | Workshop guide (10 hands-on parts + instructor demos) |
 | `manifests/llamastack.yaml` | LlamaStack deployment (Secret + ConfigMap + LlamaStackDistribution) |
-| `manifests/open-webui.yaml` | Open WebUI v0.9.0 + mcpo proxy (8 resources in one manifest) |
-| `manifests/mcp-server.yaml` | Kubernetes MCP server (ServiceAccount + RoleBinding + Deployment + Service) |
+| `manifests/open-webui.yaml` | Open WebUI v0.9.0 (5 resources) |
+| `manifests/mcp-server.yaml` | Kubernetes MCP server (reference — used by instructor setup) |
 | `show-urls.sh` | Helper script that prints all URLs participants need |
 | `images/` | Screenshots for the guide |
+
+## Workshop Flow
+
+**Hands-on (Parts 1-10):** Participants deploy a model, LlamaStack, and Open WebUI — then test LLM chat and RAG.
+
+**Instructor Demos:** The instructor demonstrates MCP tool calling via the AI Playground and walks through observability dashboards.
 
 ## Tech Stack
 
@@ -30,8 +36,7 @@ See [RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md](RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md) for
 - Qwen3-4B (vLLM with tool calling)
 - LlamaStack 0.7.2 (operator v0.4.0)
 - Open WebUI v0.9.0
-- mcpo proxy (MCP-to-OpenAPI bridge)
-- Kubernetes MCP Server
+- Kubernetes MCP Server (instructor demo)
 
 ## Instructor Setup
 
@@ -42,4 +47,4 @@ Use the [RHOAI Toolkit](https://github.com/gymnatics/RHOAI-Toolkit) for automate
 # Select: Workshop Demo Setup > Complete Workshop Setup
 ```
 
-See Appendix C of the workshop guide for manual setup steps.
+This sets up the cluster, users, model, MCP server, and AI Playground — so the instructor can demo MCP tool calling live. See Appendix C of the workshop guide for manual setup steps.
