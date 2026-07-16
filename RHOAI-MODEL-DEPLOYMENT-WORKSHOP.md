@@ -338,7 +338,7 @@ export NAMESPACE=user-XX
 Set your model's external route URL (copy it from the Deployments tab -- click the expand arrow next to your model, find the **Inference endpoint** URL):
 
 ```bash
-export MODEL_URL=https://qwen3-4b-user-XX.apps.<cluster-domain>
+export MODEL_URL=<paste your external model endpoint here>
 ```
 
 Set your model token (from the same expanded details in the Deployments tab):
