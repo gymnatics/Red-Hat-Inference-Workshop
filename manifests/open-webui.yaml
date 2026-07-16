@@ -15,7 +15,7 @@ metadata:
   namespace: ${NAMESPACE}
 data:
   ENABLE_OLLAMA_API: "False"
-  OPENAI_API_BASE_URLS: "http://llamastack-workshop-service.${NAMESPACE}.svc.cluster.local:8321/v1"
+  OPENAI_API_BASE_URLS: ""
   OPENAI_API_KEYS: ""
   WEBUI_AUTH: "False"
   WEBUI_SECRET_KEY: "rhoai-workshop-secret-key"
