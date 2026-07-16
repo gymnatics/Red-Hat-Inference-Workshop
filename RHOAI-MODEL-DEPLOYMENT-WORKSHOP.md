@@ -355,10 +355,7 @@ sed "s|\${NAMESPACE}|$NAMESPACE|g; s|\${MODEL_URL}|$MODEL_URL|g; s|\${MODEL_TOKE
 
 ## Step 5.5: Wait for OGX/LlamaStack to Start
 
-```bash
-oc wait --for=condition=available deployment -l app.kubernetes.io/instance=llamastack-workshop \
-  -n $NAMESPACE --timeout=120s
-```
+Go to **Workloads** on the Openshift Console sidebar and select the **Pods** tab. Open the **Project** Drop-down and select your project and look for the llamastack-workshop pod and wait for it to be **Running 1/1**.
 
 This typically takes 1-2 minutes.
 
