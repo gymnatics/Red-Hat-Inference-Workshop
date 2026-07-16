@@ -25,7 +25,7 @@ By the end of this workshop, you will:
 | Part 2 | Create Your Project | Hands-on | ~5 min |
 | Part 3 | Deploy a Model | Hands-on | ~15 min |
 | Part 4 | Wait for Model & Monitor | Hands-on | ~10 min |
-| Part 5 | Deploy LlamaStack | Hands-on | ~10 min |
+| Part 5 | Deploy OGX/LlamaStack | Hands-on | ~10 min |
 | Part 6 | Deploy Open WebUI | Hands-on | ~5 min |
 | Part 7 | Connect Model to OpenWebUI | Hands-on | ~5 min |
 | Part 8 | Test LLM Chat | Hands-on | ~10 min |
@@ -300,18 +300,18 @@ Once the status shows **Ready** (green), your model is ready.
 
 ---
 
-# Part 5: Deploy LlamaStack (~10 min)
+# Part 5: Deploy OGX/LlamaStack (~10 min)
 
-Now you'll deploy **LlamaStack** — a unified API layer that brings together inference and tool calling under a single Kubernetes-managed endpoint.
+Now you'll deploy **OGX/LlamaStack** — a unified API layer that brings together inference and tool calling under a single Kubernetes-managed endpoint.
 
-## What is LlamaStack?
+## What is OGX/LlamaStack?
 
-LlamaStack is a developer framework for building generative AI applications. On RHOAI, it's managed by the **LlamaStack Operator** — you deploy a `LlamaStackDistribution` custom resource, and the operator creates and manages the LlamaStack server for you.
+LlamaStack is a developer framework for building generative AI applications. On RHOAI, it's managed by the **OGX/LlamaStack Operator** — you deploy a `LlamaStackDistribution` custom resource, and the operator creates and manages the OGX/LlamaStack server for you.
 
 > **What this deploys:**
 > - **Secret** — stores the shared model's endpoint URL and your authentication token
-> - **ConfigMap** — LlamaStack's `run.yaml` configuration that tells it where the model is
-> - **LlamaStackDistribution** — custom resource that the LlamaStack Operator uses to deploy and manage a LlamaStack server pod in your namespace
+> - **ConfigMap** — OGX/LlamaStack's `run.yaml` configuration that tells it where the model is
+> - **LlamaStackDistribution** — custom resource that the OGX/LlamaStack Operator uses to deploy and manage a OGX/LlamaStack server pod in your namespace
 
 ## Step 5.1: Open the Web Terminal
 
@@ -347,13 +347,13 @@ Set your model token (from the same expanded details in the Deployments tab):
 export MODEL_TOKEN=<paste-token-here>
 ```
 
-## Step 5.4: Deploy LlamaStack
+## Step 5.4: Deploy OGX/LlamaStack
 
 ```bash
 sed "s|\${NAMESPACE}|$NAMESPACE|g; s|\${MODEL_URL}|$MODEL_URL|g; s|\${MODEL_TOKEN}|$MODEL_TOKEN|g" manifests/llamastack.yaml | oc apply -f -
 ```
 
-## Step 5.5: Wait for LlamaStack to Start
+## Step 5.5: Wait for OGX/LlamaStack to Start
 
 ```bash
 oc wait --for=condition=available deployment -l app.kubernetes.io/instance=llamastack-workshop \
@@ -362,7 +362,7 @@ oc wait --for=condition=available deployment -l app.kubernetes.io/instance=llama
 
 This typically takes 1-2 minutes.
 
-## Step 5.6: Verify LlamaStack is Running
+## Step 5.6: Verify OGX/LlamaStack is Running
 
 ```bash
 oc get pods -n $NAMESPACE -l app.kubernetes.io/instance=llamastack-workshop
@@ -430,7 +430,7 @@ Open the URL in your browser. If you see a sign-up page, create any account — 
 
 OpenWebUI needs to know where your LlamaStack instance is. You'll add it as an external connection with your model token for authentication.
 
-## Step 7.1: Get Your LlamaStack URL
+## Step 7.1: Get Your OGX/LlamaStack URL
 
 Back in the Web Terminal, run:
 
@@ -451,7 +451,7 @@ Copy this URL -- you'll paste it in the next step.
 
 | Field | Value |
 |-------|-------|
-| **URL** | Paste the LlamaStack URL from Step 7.1 |
+| **URL** | Paste the OGX/LlamaStack URL from Step 7.1 |
 | **Auth** | Select **Bearer**, then paste the **token** you copied from Part 4 Step 4.2 (the same value you used for `MODEL_TOKEN`) |
 
 ![OpenWebUI Connection Settings](images/openwebui-connection.png)
@@ -465,7 +465,7 @@ Copy this URL -- you'll paste it in the next step.
 
 # Part 8: Test LLM Chat (~10 min)
 
-Now that OpenWebUI is connected to your model via LlamaStack, test basic chat.
+Now that OpenWebUI is connected to your model via OGX/LlamaStack, test basic chat.
 
 ## Step 8.1: Start a Chat
 
@@ -491,10 +491,10 @@ Write a Python function that calculates the Fibonacci sequence up to n terms.
 If you receive responses, this confirms the full pipeline is working:
 
 ```
-You (browser) → Open WebUI → LlamaStack → vLLM (your model)
+You (browser) → Open WebUI → OGX/LlamaStack → vLLM (your model)
 ```
 
-> **Note:** When calling the LlamaStack API directly (e.g., via `curl`), the full model ID is `vllm-inference/qwen3-4b`. The OpenWebUI dropdown may show the short name.
+> **Note:** When calling the OGX/LlamaStack API directly (e.g., via `curl`), the full model ID is `vllm-inference/qwen3-4b`. The OpenWebUI dropdown may show the short name.
 
 ---
 
