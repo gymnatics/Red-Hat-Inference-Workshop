@@ -17,16 +17,16 @@ See [RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md](RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md) for
 
 | File | Purpose |
 |------|---------|
-| `RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md` | Workshop guide (10 hands-on parts + instructor demos) |
-| `manifests/llamastack.yaml` | LlamaStack deployment (Secret + ConfigMap + LlamaStackDistribution) |
+| `RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md` | Workshop guide (9 hands-on parts + instructor demos) |
 | `manifests/open-webui.yaml` | Open WebUI v0.9.0 (5 resources) |
 | `manifests/mcp-server.yaml` | Kubernetes MCP server (reference — used by instructor setup) |
+| `manifests/llamastack.yaml` | LlamaStack deployment (reference — not used in hands-on) |
 | `show-urls.sh` | Helper script that prints all URLs participants need |
 | `images/` | Screenshots for the guide |
 
 ## Workshop Flow
 
-**Hands-on (Parts 1-10):** Participants deploy a model, LlamaStack, and Open WebUI — then test LLM chat and RAG.
+**Hands-on (Parts 1-9):** Participants deploy a model and Open WebUI — then test LLM chat and RAG.
 
 **Instructor Demos:** The instructor demonstrates MCP tool calling via the AI Playground and walks through observability dashboards.
 
@@ -34,7 +34,6 @@ See [RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md](RHOAI-MODEL-DEPLOYMENT-WORKSHOP.md) for
 
 - RHOAI 3.4, OCP 4.20+
 - Qwen3-4B (vLLM with tool calling)
-- LlamaStack 0.7.2 (operator v0.4.0)
 - Open WebUI v0.9.0
 - Kubernetes MCP Server (instructor demo)
 
