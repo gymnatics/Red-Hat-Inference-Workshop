@@ -315,7 +315,7 @@ LlamaStack is a developer framework for building generative AI applications. On 
 
 ## Step 5.1: Open the Web Terminal
 
-Click the **`>_`** icon in the top-right masthead of the OpenShift console to open the Web Terminal. This gives you an in-browser terminal with `oc`, `git`, and `sed` pre-installed -- no local CLI tools needed.
+Access the **OpenShift Console** by clicking on the **waffle** icon on the top right of the RHOAI platform and select **OpenShift Console**. Click the **`>_`** icon in the top-right masthead of the OpenShift console to open the Web Terminal. This gives you an in-browser terminal with `oc`, `git`, and `sed` pre-installed -- no local CLI tools needed.
 
 ## Step 5.2: Clone the Workshop Repository
 
