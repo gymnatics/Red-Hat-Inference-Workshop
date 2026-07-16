@@ -374,18 +374,21 @@ You should see a pod in `Running` state.
 
 ---
 
-# Part 6: Deploy Open WebUI (~10 min)
+# Part 6: Deploy Open WebUI + mcpo Proxy (~10 min)
 
-Now you'll deploy **Open WebUI** — a self-hosted chat interface (similar to ChatGPT).
+Now you'll deploy **Open WebUI** — a self-hosted chat interface (similar to ChatGPT) — along with the **mcpo proxy** that converts MCP tools into OpenAPI endpoints that OpenWebUI can call reliably.
 
-> **What this deploys:**
-> - **ConfigMap** — base configuration for OpenWebUI
+> **What this deploys (8 resources in one manifest):**
+> - **ConfigMap** (openwebui-config) — base configuration for OpenWebUI
 > - **PersistentVolumeClaim** — 2Gi storage for OpenWebUI data
-> - **Deployment** — the Open WebUI container
-> - **Service** — internal cluster access
-> - **Route** — external HTTPS URL for your browser
+> - **Deployment** (open-webui) — the Open WebUI container (v0.9.0)
+> - **Service** (open-webui) — internal cluster access
+> - **Route** (open-webui) — external HTTPS URL for your browser
+> - **ConfigMap** (mcpo-config) — proxy config pointing to the MCP server
+> - **Deployment** (mcpo) — the mcpo proxy that converts MCP to OpenAPI
+> - **Service** (mcpo) — exposes the proxy at port 8000
 
-## Step 6.1: Deploy Open WebUI
+## Step 6.1: Deploy Open WebUI + mcpo Proxy
 
 Make sure your `NAMESPACE` variable is still set and you're in the workshop repo directory, then deploy:
 
@@ -393,13 +396,25 @@ Make sure your `NAMESPACE` variable is still set and you're in the workshop repo
 sed "s/\${NAMESPACE}/$NAMESPACE/g" manifests/open-webui.yaml | oc apply -f -
 ```
 
+This single command deploys both Open WebUI and the mcpo proxy.
+
 ## Step 6.2: Wait for Open WebUI
 
 ```bash
 oc rollout status deployment/open-webui -n $NAMESPACE --timeout=120s
 ```
 
-## Step 6.3: Get the Open WebUI URL
+## Step 6.3: Get Your Workshop URLs
+
+Run the helper script to print all URLs you'll need:
+
+```bash
+bash show-urls.sh
+```
+
+This prints your OpenWebUI URL, LlamaStack URL, model token, and mcpo tools URL — all ready to copy-paste.
+
+Alternatively, get just the Open WebUI URL:
 
 ```bash
 echo "https://$(oc get route open-webui -n $NAMESPACE -o jsonpath='{.spec.host}')"
@@ -514,22 +529,17 @@ What prerequisites are mentioned?
 
 ---
 
-# Part 10: Deploy MCP Server + Proxy (~5 min)
+# Part 10: Deploy MCP Server (~5 min)
 
-Now you'll deploy your own **MCP (Model Context Protocol) server** and an **mcpo proxy** that converts MCP tools into OpenAPI endpoints that OpenWebUI can call reliably.
+Now you'll deploy your own **MCP (Model Context Protocol) server** — a Kubernetes-native tool server that lets the LLM query live cluster resources.
 
-> **What this deploys (two manifests):**
->
-> `mcp-server.yaml`:
+> **What this deploys:**
 > - **ServiceAccount** — identity for the MCP server pod
 > - **RoleBinding** — grants read-only access to resources in your namespace
 > - **Deployment** — runs the Kubernetes MCP server
 > - **Service** — exposes the MCP server at port 8080
 >
-> `mcpo-proxy.yaml`:
-> - **ConfigMap** — tells the proxy where to find the MCP server
-> - **Deployment** — runs the mcpo proxy that converts MCP to OpenAPI
-> - **Service** — exposes the proxy at port 8000
+> The **mcpo proxy** (which converts MCP to OpenAPI for OpenWebUI) was already deployed alongside Open WebUI in Part 6.
 
 ## Step 10.1: Deploy the MCP Server
 
@@ -537,27 +547,20 @@ Now you'll deploy your own **MCP (Model Context Protocol) server** and an **mcpo
 sed "s|\${NAMESPACE}|$NAMESPACE|g" manifests/mcp-server.yaml | oc apply -f -
 ```
 
-## Step 10.2: Deploy the mcpo Proxy
-
-```bash
-sed "s|\${NAMESPACE}|$NAMESPACE|g" manifests/mcpo-proxy.yaml | oc apply -f -
-```
-
-## Step 10.3: Wait for Both to Start
+## Step 10.2: Wait for It to Start
 
 ```bash
 oc rollout status deployment/kubernetes-mcp-server -n $NAMESPACE --timeout=60s
-oc rollout status deployment/mcpo -n $NAMESPACE --timeout=60s
 ```
 
-## Step 10.4: Verify
+## Step 10.3: Verify
 
 ```bash
 oc get pods -n $NAMESPACE -l app=kubernetes-mcp-server
 oc get pods -n $NAMESPACE -l app=mcpo
 ```
 
-Both should show `Running`.
+Both should show `Running` (the mcpo proxy was deployed in Part 6).
 
 ---
 
@@ -749,21 +752,22 @@ After this workshop, you can explore:
 **Fix:**
 
 1. Check that LlamaStack is running: `oc get pods -n $NAMESPACE -l app.kubernetes.io/instance=llamastack-workshop`
-2. Verify the `OPENAI_API_BASE_URLS` in the Open WebUI ConfigMap points to your LlamaStack service
-3. In Open WebUI Settings → Connections, click the refresh icon to re-test
+2. In Open WebUI Admin Panel → Settings → Connections, verify the URL and Bearer token are correct
+3. Click the refresh icon to re-test the connection
 4. Check LlamaStack logs: `oc logs -n $NAMESPACE -l app.kubernetes.io/instance=llamastack-workshop`
 
 ## "MCP tools not appearing"
 
-**Cause:** MCP server URL is wrong, or the server is not running.
+**Cause:** mcpo proxy or MCP server is not running, or the URL is wrong.
 
 **Fix:**
 
-1. Verify the MCP server is running: `oc get pods -n $NAMESPACE -l app=kubernetes-mcp-server`
-2. Check the URL matches: `http://kubernetes-mcp-server.<your-namespace>.svc.cluster.local:8080/mcp`
-3. Make sure you selected **MCP (Streamable HTTP)** as the type (not OpenAPI)
-4. Try removing and re-adding the MCP server connection
-5. Refresh the Open WebUI page
+1. Verify both pods are running: `oc get pods -n $NAMESPACE -l app=kubernetes-mcp-server` and `oc get pods -n $NAMESPACE -l app=mcpo`
+2. Check the URL matches: `http://mcpo.<your-namespace>.svc.cluster.local:8000/kubernetes`
+3. Make sure you selected **OpenAPI** as the type (not MCP/Streamable HTTP)
+4. Auth should be set to **None**
+5. Try removing and re-adding the tool server connection
+6. Refresh the Open WebUI page
 
 ## "Tool calls not working"
 
@@ -825,11 +829,14 @@ oc project user-XX
 # Deploy LlamaStack
 sed "s|\${NAMESPACE}|$NAMESPACE|g; s|\${MODEL_URL}|$MODEL_URL|g; s|\${MODEL_TOKEN}|$MODEL_TOKEN|g" manifests/llamastack.yaml | oc apply -f -
 
-# Deploy Open WebUI
+# Deploy Open WebUI + mcpo proxy
 sed "s/\${NAMESPACE}/$NAMESPACE/g" manifests/open-webui.yaml | oc apply -f -
 
 # Deploy MCP Server
-sed "s/\${NAMESPACE}/$NAMESPACE/g" manifests/mcp-server.yaml | oc apply -f -
+sed "s|\${NAMESPACE}|$NAMESPACE|g" manifests/mcp-server.yaml | oc apply -f -
+
+# Print all workshop URLs (LlamaStack, mcpo, OpenWebUI, token)
+bash show-urls.sh
 
 # Check all pods in your namespace
 oc get pods -n user-XX
