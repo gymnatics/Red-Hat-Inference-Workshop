@@ -449,7 +449,9 @@ Open WebUI has built-in RAG (Retrieval-Augmented Generation) that lets you uploa
 
 1. In the chat sidebar, click the **+** icon (or the paperclip/attachment icon)
 2. Upload a document (PDF, text file, or paste text). Suggestion: upload any short document (e.g., a page from Red Hat documentation, a project README, or even this workshop guide)
-3. In this example, we will be using a website for the RAG: https://support.apple.com/en-sg/126322
+3. In this example, we will be using a website for the RAG — click **"Attach Webpage"** and enter: `https://support.apple.com/en-sg/126322`
+
+![Attach Webpage](images/openwebui-attach-webpage.png)
 
 ## Step 9.2: Ask Questions About the Document
 
