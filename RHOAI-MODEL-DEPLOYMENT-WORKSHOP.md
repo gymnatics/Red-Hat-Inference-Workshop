@@ -207,16 +207,17 @@ This step configures model availability, access, and tool calling. **Check all f
 | **Require token authentication** | **Check this box** |
 | **Add custom runtime arguments** | **Check this box** |
 
+
+![Custom Runtime Arguments](images/vllm-args.png)
+
+![Advanced Settings with Tool Calling](images/model-deployment-6.jpeg)
+
 After checking **"Add custom runtime arguments"**, add the following arguments. Enter each on its own line in the text box:
 
 ```
 --enable-auto-tool-choice
 --tool-call-parser=hermes
 ```
-
-![Custom Runtime Arguments](images/vllm-args.png)
-
-![Advanced Settings with Tool Calling](images/model-deployment-6.jpeg)
 
 **What these arguments do:**
 
