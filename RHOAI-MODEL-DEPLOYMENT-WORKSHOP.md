@@ -397,6 +397,8 @@ Copy this URL — you'll paste it in the next step.
 | **URL** | Paste the model URL from Step 7.1 |
 | **Auth** | Select **Bearer**, then paste the **token** you copied from Part 4 Step 4.2 |
 
+![Model Details Expanded](images/token.png)
+
 ![OpenWebUI Connection Settings](images/openwebui-connection.png)
 
 7. Click **Save**
