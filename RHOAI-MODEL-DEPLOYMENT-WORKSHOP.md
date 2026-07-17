@@ -567,22 +567,7 @@ What events happened recently in admin-workshop?
 
 > **Note:** These dashboards require User Workload Monitoring to be enabled and Grafana dashboards to be deployed. Both are configured by the automated workshop setup.
 
----
 
-# What's Next?
-
-After this workshop, you can explore:
-
-| Topic | Where to Learn More |
-|-------|---------------------|
-| **MCP Tool Calling** | Deploy your own MCP servers and connect them to OpenWebUI or the AI Playground. See [MCP Server Setup](MCP-SERVER-SETUP.md) |
-| **Models-as-a-Service (MaaS)** | API keys, subscriptions, and rate limiting for multi-tenant model access. See [MaaS Policy Enforcement](MAAS-POLICY-ENFORCEMENT.md) |
-| **NeMo Guardrails** | Add safety guardrails to your model responses. See [RHCL + Guardrails Architecture](RHCL-GUARDRAILS-ARCHITECTURE.md) |
-| **Model Registry** | Version and manage your models. See [Model Registry](MODEL-REGISTRY.md) |
-| **AI Pipelines** | Build automated ML workflows. See the [RHOAI documentation](https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/3.4) |
-| **LLM Evaluation** | Benchmark your models with LMEval. See the [Demo Environment](DEMO-ENVIRONMENT.md) |
-
----
 
 # Troubleshooting
 
